@@ -29,7 +29,7 @@ services:
       context: .
       dockerfile: ./test/playwright/Dockerfile
       args:
-        PLAYWRIGHT_VERSION: v1.45.0-noble
+        PLAYWRIGHT_VERSION: v1.48.2-noble
     environment:
       <<: *keycloak-env
       CI: true

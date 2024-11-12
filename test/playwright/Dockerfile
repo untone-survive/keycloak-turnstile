@@ -1,4 +1,4 @@
-ARG PLAYWRIGHT_VERSION=v1.45.0-noble
+ARG PLAYWRIGHT_VERSION=v1.48.2-noble
 
 FROM mcr.microsoft.com/playwright:${PLAYWRIGHT_VERSION}
 
