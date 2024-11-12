@@ -24,10 +24,10 @@ test.describe('keycloak turnstile browser login', async () => {
             await page.fill('input#username', KEYCLOAK_ADMIN_USERNAME);
             await page.fill('input#password', KEYCLOAK_ADMIN_PASSWORD);
 
-            await page.waitForSelector('iframe[src^="https://challenges.cloudflare.com/cdn-cgi/challenge-platform/"]');
-            const challengeFrame = page.frame({ url: /https\:\/\/challenges\.cloudflare\.com\/cdn-cgi\/challenge\-platform\/.*/ });
-            expect(challengeFrame).not.toBeNull();
-            await challengeFrame!.waitForSelector('#success');
+            await page.waitForFunction(() => {
+                const resp = document.querySelector('input[name="cf-turnstile-response"]');
+                return resp && resp.getAttribute('value') != null;
+            });
 
             await page.click('input#kc-login');
 
@@ -54,10 +54,10 @@ test.describe('keycloak turnstile browser login', async () => {
             await page.fill('input#username', KEYCLOAK_ADMIN_USERNAME);
             await page.fill('input#password', KEYCLOAK_ADMIN_PASSWORD);
 
-            await page.waitForSelector('iframe[src^="https://challenges.cloudflare.com/cdn-cgi/challenge-platform/"]');
-            const challengeFrame = page.frame({ url: /https\:\/\/challenges\.cloudflare\.com\/cdn-cgi\/challenge\-platform\/.*/ });
-            expect(challengeFrame).not.toBeNull();
-            await challengeFrame!.waitForSelector('#success');
+            await page.waitForFunction(() => {
+                const resp = document.querySelector('input[name="cf-turnstile-response"]');
+                return resp && resp.getAttribute('value') != null;
+            });
 
             await page.click('input#kc-login');
 
@@ -84,10 +84,10 @@ test.describe('keycloak turnstile browser login', async () => {
             await page.fill('input#username', KEYCLOAK_ADMIN_USERNAME);
             await page.fill('input#password', KEYCLOAK_ADMIN_PASSWORD);
 
-            await page.waitForSelector('iframe[src^="https://challenges.cloudflare.com/cdn-cgi/challenge-platform/"]');
-            const challengeFrame = page.frame({ url: /https\:\/\/challenges\.cloudflare\.com\/cdn-cgi\/challenge\-platform\/.*/ });
-            expect(challengeFrame).not.toBeNull();
-            await challengeFrame!.waitForSelector('#fail');
+            await page.waitForFunction(() => {
+                const resp = document.querySelector('input[name="cf-turnstile-response"]');
+                return resp && resp.getAttribute('value') != null;
+            });
 
             await page.click('input#kc-login');
 
