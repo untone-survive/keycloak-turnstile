@@ -14,16 +14,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 21
-      - name: Install dependencies
-        working-directory: ./test
-        run: npm ci
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
       - name: Run keycloak
         run: docker compose -f docker-compose.dev.yml up --build -d --wait keycloak
       - name: Run Playwright tests
         working-directory: ./test
-        run: npx playwright test
+        run: |
+          npm ci
+          npx playwright install --with-deps
+          npx playwright test
       - name: Print keycloak output
         run: docker logs keycloak
         if: failure()
