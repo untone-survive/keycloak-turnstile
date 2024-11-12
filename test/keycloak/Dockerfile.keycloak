@@ -1,6 +1,6 @@
 ARG KEYCLOAK_VERSION=latest
 
-FROM alpine as keycloak-turnstile-build
+FROM alpine AS keycloak-turnstile-build
 
     RUN apk update && \
         apk add maven;

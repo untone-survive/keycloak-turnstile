@@ -35,21 +35,69 @@ If you want to use the default theme, you could just download `turnstile-login-t
 Or you could check out the [theme](./theme) directory and modify it to your needs.
 
 ```diff
---- a/base-register.ftl
-+++ b/register.ftl
-@@ -69,10 +69,10 @@
+--- login-base.ftl
++++ login.ftl
+@@ -48,6 +48,14 @@
+ 
+                     </div>
+ 
++                    <#if captchaRequired??>
++                        <div class="form-group">
++                            <div class="${properties.kcInputWrapperClass!}">
++                                <div class="cf-turnstile" data-sitekey="${captchaSiteKey}" data-action="${captchaAction}" data-language="${captchaLanguage}"></div>
++                            </div>
++                        </div>
++                    </#if>
++
+                     <div class="${properties.kcFormGroupClass!} ${properties.kcFormSettingClass!}">
+                         <div id="kc-form-options">
+                             <#if realm.rememberMe && !usernameHidden??>
+
+```
+
+```diff
+--- register-base.ftl
++++ register.ftl
+@@ -73,10 +73,10 @@
  
              <@registerCommons.termsAcceptance/>
  
--            <#if recaptchaRequired??>
+-            <#if recaptchaRequired?? && (recaptchaVisible!false)>
 +            <#if captchaRequired??>
                  <div class="form-group">
                      <div class="${properties.kcInputWrapperClass!}">
--                        <div class="g-recaptcha" data-size="compact" data-sitekey="${recaptchaSiteKey}"></div>
+-                        <div class="g-recaptcha" data-size="compact" data-sitekey="${recaptchaSiteKey}" data-action="${recaptchaAction}"></div>
 +                        <div class="cf-turnstile" data-sitekey="${captchaSiteKey}" data-action="${captchaAction}" data-language="${captchaLanguage}"></div>
                      </div>
                  </div>
              </#if>
+@@ -88,23 +88,9 @@
+                     </div>
+                 </div>
+ 
+-                <#if recaptchaRequired?? && !(recaptchaVisible!false)>
+-                    <script>
+-                        function onSubmitRecaptcha(token) {
+-                            document.getElementById("kc-register-form").submit();
+-                        }
+-                    </script>
+-                    <div id="kc-form-buttons" class="${properties.kcFormButtonsClass!}">
+-                        <button class="${properties.kcButtonClass!} ${properties.kcButtonPrimaryClass!} ${properties.kcButtonBlockClass!} ${properties.kcButtonLargeClass!} g-recaptcha" 
+-                            data-sitekey="${recaptchaSiteKey}" data-callback='onSubmitRecaptcha' data-action='${recaptchaAction}' type="submit">
+-                            ${msg("doRegister")}
+-                        </button>
+-                    </div>
+-                <#else>
+-                    <div id="kc-form-buttons" class="${properties.kcFormButtonsClass!}">
+-                        <input class="${properties.kcButtonClass!} ${properties.kcButtonPrimaryClass!} ${properties.kcButtonBlockClass!} ${properties.kcButtonLargeClass!}" type="submit" value="${msg("doRegister")}"/>
+-                    </div>
+-                </#if>
++                <div id="kc-form-buttons" class="${properties.kcFormButtonsClass!}">
++                    <input class="${properties.kcButtonClass!} ${properties.kcButtonPrimaryClass!} ${properties.kcButtonBlockClass!} ${properties.kcButtonLargeClass!}" type="submit" value="${msg("doRegister")}"/>
++                </div>
+             </div>
+         </form>
+         <script type="module" src="${url.resourcesPath}/js/passwordVisibility.js"></script>
 
 ```
 
